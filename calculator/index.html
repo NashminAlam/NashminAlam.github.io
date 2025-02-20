@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .calculator {
+            width: 300px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        .display {
+            width: 100%;
+            height: 50px;
+            font-size: 24px;
+            text-align: right;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            background: #eee;
+            border-radius: 5px;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .operator {
+            background: #ff9500;
+            color: white;
+        }
+        .equal {
+            background: #28a745;
+            color: white;
+            grid-column: span 2;
+        }
+        .clear {
+            background: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" class="display" id="display" disabled>
+        <div class="buttons">
+            <button onclick="clearDisplay()" class="clear">C</button>
+            <button onclick="appendSymbol('%')" class="operator">%</button>
+            <button onclick="appendSymbol('^')" class="operator">^</button>
+            <button onclick="appendSymbol('/')" class="operator">/</button>
+            
+            <button onclick="appendNumber(7)">7</button>
+            <button onclick="appendNumber(8)">8</button>
+            <button onclick="appendNumber(9)">9</button>
+            <button onclick="appendSymbol('*')" class="operator">*</button>
+            
+            <button onclick="appendNumber(4)">4</button>
+            <button onclick="appendNumber(5)">5</button>
+            <button onclick="appendNumber(6)">6</button>
+            <button onclick="appendSymbol('-')" class="operator">-</button>
+            
+            <button onclick="appendNumber(1)">1</button>
+            <button onclick="appendNumber(2)">2</button>
+            <button onclick="appendNumber(3)">3</button>
+            <button onclick="appendSymbol('+')" class="operator">+</button>
+            
+            <button onclick="appendNumber(0)" class="zero">0</button>
+            <button onclick="calculateSquareRoot()" class="operator">√</button>
+            <button onclick="calculate()" class="equal">=</button>
+        </div>
+    </div>
+
+    <script>
+        let display = document.getElementById("display");
+
+        function appendNumber(number) {
+            display.value += number;
+        }
+
+        function appendSymbol(symbol) {
+            display.value += ` ${symbol} `;
+        }
+
+        function clearDisplay() {
+            display.value = "";
+        }
+
+        function calculateSquareRoot() {
+            let value = parseFloat(display.value);
+            if (value >= 0) {
+                display.value = Math.sqrt(value);
+            } else {
+                display.value = "Error";
+            }
+        }
+
+        function calculate() {
+            let expression = display.value.replace('^', '**');
+            try {
+                display.value = eval(expression);
+            } catch {
+                display.value = "Error";
+            }
+        }
+    </script>
+</body>
+</html>
